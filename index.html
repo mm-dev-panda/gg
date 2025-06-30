@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src='https://challenges.cloudflare.com/turnstile/v0/api.js' async defer></script>
+</head>
+<body style='margin:0; padding:0;'>
+    <div class='cf-turnstile'
+         data-sitekey='0x4AAAAAABi8C0OMUIUR_jlB'
+         data-callback='callback'></div>
+    <script>
+        function callback(token) {
+            window.chrome.webview.postMessage(token);
+        }
+    </script>
+</body>
+</html>
