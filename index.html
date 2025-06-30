@@ -1,41 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src='https://challenges.cloudflare.com/turnstile/v0/api.js' async defer></script>
 </head>
-<body>
-    <div id="turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAABi8C0OMUIUR_jlB" data-action="manual"></div>
-    
+<body style='margin:0; padding:0;'>
+    <div class='cf-turnstile'
+         data-sitekey='0x4AAAAAABi8C0OMUIUR_jlB'
+         data-callback='callback'></div>
     <script>
-        let widgetId = null;
-
-        function onLoad() {
-            widgetId = turnstile.render('#turnstile', {
-                sitekey: '0x4AAAAAABi8C0OMUIUR_jlB',
-                callback: token => {
-                    console.log('Verified:', token);
-                    if(window.chrome && window.chrome.webview) {
-                        window.chrome.webview.postMessage(token);
-                    }
-                    document.getElementById('turnstile').innerHTML = '<p>Верификация пройдена!</p>';
-                },
-                'error-callback': () => console.log('Error'),
-                'expired-callback': () => console.log('Expired'),
-                action: 'manual'
-            });
+        function callback(token) {
+            window.chrome.webview.postMessage(token);
         }
-
-        window.onload = () => {
-            onLoad();
-
-            // Добавляем слушатель на клик по квадрату
-            const container = document.getElementById('turnstile');
-            container.addEventListener('click', () => {
-                if (widgetId !== null) {
-                    turnstile.execute(widgetId);
-                }
-            });
-        };
     </script>
 </body>
 </html>
