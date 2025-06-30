@@ -13,7 +13,8 @@
     <script>
         let widgetId = null;
 
-        window.onload = function() {
+        // Функция, которую вызовет API после загрузки
+        function turnstileOnLoad() {
             widgetId = turnstile.render('#turnstile', {
                 sitekey: '0x4AAAAAABi8C0OMUIUR_jlB',
                 action: 'manual',
@@ -21,14 +22,13 @@
                 callback: callback
             });
 
-            // Навесим обработчик на клик по виджету
+            // Обработчик клика для запуска проверки
             document.getElementById('turnstile').addEventListener('click', () => {
-                // При клике запускаем верификацию
                 if (widgetId !== null) {
                     turnstile.execute(widgetId);
                 }
             });
-        };
+        }
 
         function callback(token) {
             window.chrome.webview.postMessage(token);
