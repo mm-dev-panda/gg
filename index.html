@@ -1,35 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src='https://challenges.cloudflare.com/turnstile/v0/api.js' async defer></script>
 </head>
-<body style="margin:0; padding:0;">
-    <div id="turnstile" class="cf-turnstile"
-         data-sitekey="0x4AAAAAABi8C0OMUIUR_jlB"
-         data-action="manual"
+<body style='margin:0; padding:0;'>
+    <div class='cf-turnstile'
+         data-sitekey='0x4AAAAAABi8C0OMUIUR_jlB'
          data-theme="light"
-         data-callback="callback"></div>
-
+         data-callback='callback'></div>
     <script>
-        let widgetId = null;
-
-        // Функция, которую вызовет API после загрузки
-        function turnstileOnLoad() {
-            widgetId = turnstile.render('#turnstile', {
-                sitekey: '0x4AAAAAABi8C0OMUIUR_jlB',
-                action: 'manual',
-                theme: 'light',
-                callback: callback
-            });
-
-            // Обработчик клика для запуска проверки
-            document.getElementById('turnstile').addEventListener('click', () => {
-                if (widgetId !== null) {
-                    turnstile.execute(widgetId);
-                }
-            });
-        }
-
         function callback(token) {
             window.chrome.webview.postMessage(token);
         }
